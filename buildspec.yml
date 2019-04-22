@@ -1,27 +1,22 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
 version: 0.2
-env:
-  variables:
-    S3_BUCKET: "codepipeline-us-east-1-268723104297/Worthitgifts-stage-test/SourceArtifact"
-    APP_NAME: "worthitgifts"
 
 phases:
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
   build:
     commands:
-      - echo test
-#      - npm run install-client
-#      - npm run build-client
-#  post_build:
-#    commands:
-#      # Clear S3 bucket.
-#      - aws s3 rm --recursive s3://${S3_BUCKET}
-#      - echo S3 bucket is cleared.
-#      # Copy dist folder to S3 bucket, As of Angular 6, builds are stored inside an app folder in distribution and not at the root of the dist folder
-#      - aws s3 cp client/dist s3://${S3_BUCKET}/${APP_NAME} --recursive
-#      - echo Build completed on `date`
-#
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+  post_build:
+    commands:
+      - echo Build completed on `date`
+# Include only the files required for your application to run.
+# Do not use recursively include artifacts from node_modules directory as it will include unnecessary packages 
+# used only for building and testing.
+# ExpressJS apps will need other artifact directories included (bin/*, public/*, routes/*, views/* etc).
 artifacts:
-    files:
-      - '**/*'
-    name: BuildArtifact
-#    discard-paths: yes
-#    base-directory: 'client/dist/*'
+  files:
+    - **/*
