@@ -1,0 +1,27 @@
+version: 0.2
+env:
+  variables:
+    S3_BUCKET: "codepipeline-us-east-1-268723104297/Worthitgifts-stage-test/SourceArtifact"
+    APP_NAME: "worthitgifts"
+
+phases:
+  build:
+    commands:
+      - echo test
+#      - npm run install-client
+#      - npm run build-client
+#  post_build:
+#    commands:
+#      # Clear S3 bucket.
+#      - aws s3 rm --recursive s3://${S3_BUCKET}
+#      - echo S3 bucket is cleared.
+#      # Copy dist folder to S3 bucket, As of Angular 6, builds are stored inside an app folder in distribution and not at the root of the dist folder
+#      - aws s3 cp client/dist s3://${S3_BUCKET}/${APP_NAME} --recursive
+#      - echo Build completed on `date`
+#
+artifacts:
+    files:
+      - '**/*'
+    name: BuildArtifact
+#    discard-paths: yes
+#    base-directory: 'client/dist/*'
